@@ -15,7 +15,11 @@ public class SomeMovement : MonoBehaviour {
     [SerializeField] float jumpSpeed = 20f;
     [SerializeField] float gravity = 1f;
     [SerializeField] float mouseSens = 1f;
+    [SerializeField] GameObject camBoomLerpTarget;
     [SerializeField] GameObject camBoom;
+    //[SerializeField] float rotLerpTime = 0.1f;
+
+    Quaternion cameraTargetRotation;
     float camAngle;
 	// Use this for initialization
 	void Start () {
@@ -40,7 +44,8 @@ public class SomeMovement : MonoBehaviour {
         if (camAngle + my < 90f && camAngle + my > -90f)
         {
             camAngle += my;
-            camBoom.transform.localRotation = Quaternion.Euler(Vector3.right * camAngle);
+            camBoomLerpTarget.transform.localRotation =  ( Quaternion.Euler(Vector3.right* camAngle));
+            camBoom.transform.localRotation *= (Quaternion.Euler(Vector3.right * my));
         }
 
         if (!Physics.Raycast(transform.position, -transform.up, 1.1f))
@@ -52,16 +57,16 @@ public class SomeMovement : MonoBehaviour {
             body.velocity -= Vector3.up * saveY;
             body.velocity = Vector3.Lerp(body.velocity, Vector3.ClampMagnitude(body.velocity, maxAirSpeed),airDrag) + Vector3.up * saveY;
 
-            Quaternion camRot = camBoom.transform.rotation;
+            Quaternion camRot = camBoomLerpTarget.transform.rotation;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0)), 0.4f);
-            camBoom.transform.rotation = camRot;
+            camBoomLerpTarget.transform.rotation = camRot;
         }
         else
         {
             if (Input.GetButtonDown("Jump"))
                 body.velocity += transform.up * jumpSpeed;
             else
-                body.velocity = (transform.forward * Input.GetAxisRaw("Vertical") + transform.right * Input.GetAxisRaw("Horizontal")) * moveSpeed;
+                body.velocity = (transform.forward * Input.GetAxisRaw("Vertical") + transform.right * Input.GetAxisRaw("Horizontal")).normalized * moveSpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -74,6 +79,7 @@ public class SomeMovement : MonoBehaviour {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
+        //camBoom.transform.rotation = Quaternion.Lerp(camBoom.transform.rotation, cameraTargetRotation, rotLerpTime);
     }
 
 
@@ -81,32 +87,39 @@ public class SomeMovement : MonoBehaviour {
     {
         float angle = (Vector3.Dot(transform.up, collision.contacts[0].normal)*Mathf.Rad2Deg);
 
-        Debug.Log(angle);
+        //Debug.Log(angle);
 
         if (angle > minAngle/90f && angle > 0)
         {
+            Quaternion camRot = camBoomLerpTarget.transform.rotation;
+            Quaternion camBoomRot = camBoom.transform.rotation;
+
             Vector3 normal = collision.contacts[0].normal;
             Vector3 oldForward = transform.forward;
+            
             transform.up = normal;
+            //transform.Rotate(Vector3.up, -transform.localEulerAngles.y);
             transform.Rotate(Vector3.up, turnAngle);
-            //*/
-            Quaternion camRot = camBoom.transform.rotation;
-            camBoom.transform.rotation = camRot;
-            //*/
-            /*
-            There is still one edge case to take care of --
-            when landing a certain way, teh player is tilted for a second
-            Also, running 90 degress up rotates teh player slightly, but fixes on landing.
 
-            TODO:
-                Edge Case rotation
-                Cam rotation smoothing
-                Guns
-                Networking
-                Think about WallCling
-            */
+            camBoomLerpTarget.transform.rotation = (camRot);
+            camBoom.transform.rotation = (camBoomRot);
         }
 
     }
+    /*
+  There is still one edge case to take care of --
+  when landing a certain way, teh player is tilted for a second
+  Also, running 90 degress up rotates teh player slightly, but fixes on landing.
 
+  TODO:
+
+      still some turning once we go upside down -- up normal default up rotation is different somehow
+      falling 180 degrees flips the player
+
+      Edge Case rotation
+      Cam rotation smoothing
+      Guns
+      Networking
+      Think about WallCling
+  */
 }
