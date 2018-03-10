@@ -1,24 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 public class MyPlayerAlternative : MonoBehaviour {
     [SerializeField] int damage;
     [SerializeField] int armor;
     [SerializeField] GameObject gun;
-    public static bool MuteAllSounds
-    {
-        get { return EditorPrefs.GetBool("Mute", false); }
-        set { EditorPrefs.SetBool("Mute", value); }
-    }
+    //public static bool MuteAllSounds
+    //{
+    //    get { return EditorPrefs.GetBool("Mute", false); }
+    //    set { EditorPrefs.SetBool("Mute", value); }
+    //}
 
 }
 
-[CustomEditor(typeof(MyPlayerAlternative))]
-[CanEditMultipleObjects]
-public class MyPlayerEditor : Editor
-{
+//[CustomEditor(typeof(MyPlayerAlternative))]
+//[CanEditMultipleObjects]
+public class MyPlayerEditor : MonoBehaviour { 
+//{
+    /*
     SerializedProperty damageProp;
     SerializedProperty armorProp;
     SerializedProperty gunProp;
@@ -56,4 +57,5 @@ public class MyPlayerEditor : Editor
         EditorGUI.ProgressBar(rect, value, label);
         EditorGUILayout.Space();
     }
+    */
 }

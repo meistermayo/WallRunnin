@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
-public class CheatsWindow : EditorWindow {
+public class CheatsWindow : MonoBehaviour{//EditorWindow {
+    /*
     bool useCustomFeatures;
     BoundsInt bounds;
 
@@ -39,13 +40,14 @@ public class CheatsWindow : EditorWindow {
         }
        // EditorGUILayout.EndFadeGroup();
     }
+    */
 }
 
 public class Cheats {
-    public static bool MuteAllSounds
-    {
-        get { return EditorPrefs.GetBool("Mute", false); }
-        set { EditorPrefs.SetBool("Mute", value); }
-    }
+    //public static bool MuteAllSounds
+    //{
+    //    get { return EditorPrefs.GetBool("Mute", false); }
+    //    set { EditorPrefs.SetBool("Mute", value); }
+    //}
 }
 

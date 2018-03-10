@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class SomeMovement : MonoBehaviour {
+public class SomeMovement : NetworkBehaviour {
     float h, v;
     float turnAngle;
     Rigidbody body;
@@ -28,11 +29,28 @@ public class SomeMovement : MonoBehaviour {
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-	}
+
+
+        if (isLocalPlayer)
+        {
+            Camera.main.transform.parent = 
+                camBoom.transform;
+            Camera.main.transform.localPosition = Vector3.zero;
+            MeshRenderer[] meshes = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer mesh in meshes)
+            {
+                mesh.enabled=false;// layer = LayerMask.NameToLayer("LocalModel");
+            }
+        }
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
         // if (Camera.main.transform.rotation.eulerAngles.y != transform.localEulerAngles.y)
         //     transform.Rotate(Vector3.up,Mathf.DeltaAngle(Camera.main.transform.rotation.eulerAngles.y,transform.localEulerAngles.y));
         float mx, my;
