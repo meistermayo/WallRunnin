@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : NetworkBehaviour
 {
     [SerializeField] Weapon weapon;
     [SerializeField] Bullet bullet;
@@ -22,20 +23,31 @@ public class WeaponManager : MonoBehaviour
 
     void Shoot()
     {
-        if (canShoot)
+        if (isLocalPlayer)
         {
-            if (Input.GetMouseButton(0))
+            if (canShoot)
             {
-                GameObject temp = Instantiate(baseProjectile, Camera.main.transform.position, Camera.main.transform.rotation);
-                Physics.IgnoreCollision(myCol, temp.GetComponent<Collider>());
-                Projectile projectile = temp.GetComponent<Projectile>();
-                projectile.SetBullet(bullet);
-                canShoot = false;
-                timer = weapon.cooldown;
+                if (Input.GetMouseButton(0))
+                {
+                    CmdShoot();
+                }
             }
         }
     }
 
+    [Command]
+    void CmdShoot()
+    {
+        GameObject temp = Instantiate(baseProjectile, Camera.main.transform.position, Camera.main.transform.rotation);
+        Physics.IgnoreCollision(myCol, temp.GetComponent<Collider>());
+        Projectile projectile = temp.GetComponent<Projectile>();
+        projectile.SetBullet(bullet);
+
+        NetworkServer.Spawn(temp);
+
+        canShoot = false;
+        timer = weapon.cooldown;
+    }
     void Timer()
     {
         timer -= Time.deltaTime;

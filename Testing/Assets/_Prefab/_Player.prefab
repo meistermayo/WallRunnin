@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 136389264989607450}
   - component: {fileID: 23390385346908374}
   - component: {fileID: 114839270649872140}
+  - component: {fileID: 114853021322039504}
   - component: {fileID: 54742904942049096}
   - component: {fileID: 114724078449285216}
   - component: {fileID: 114905441162662196}
@@ -578,6 +579,21 @@ MonoBehaviour:
   mouseSens: 2
   camBoomLerpTarget: {fileID: 1947424597362096}
   camBoom: {fileID: 1492391230424720}
+--- !u!114 &114853021322039504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1558476328753754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ac893bcdabc5f4a9fc4be0d76cc7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: a218295c2bda32142ab03045c02276ff, type: 2}
+  bullet: {fileID: 11400000, guid: b2aa0b9e82bd39a439a948146cab14fc, type: 2}
+  baseProjectile: {fileID: 1353291585224346, guid: 191d39f6ebdb8a349a1d9c3b64f63e5a,
+    type: 2}
 --- !u!114 &114905441162662196
 MonoBehaviour:
   m_ObjectHideFlags: 1

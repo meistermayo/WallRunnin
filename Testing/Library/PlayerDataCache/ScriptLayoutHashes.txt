@@ -151,3 +151,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 1f5201672c6b94c7f22d1eb1d32247ad Assembly-CSharp.dll:.CamMove
 75ae5aa54552bacd8376d43b950a16cf Assembly-CSharp.dll:.Bob
 5618a1adbe3e78e4b7405bebc910c8a5 Assembly-CSharp.dll:.LinkedListTest
+f20373d1d7331e5c673ec598dcda0dc0 Assembly-CSharp.dll:.WeaponManager
+a471d63f30ccf59948d5142ef8318f70 Assembly-CSharp.dll:.Projectile
+f91b5a001fa90d1a6acba48271abca10 Assembly-CSharp.dll:.Bullet
+34d7ea11b94837797795205fef459cdc Assembly-CSharp.dll:.Weapon
